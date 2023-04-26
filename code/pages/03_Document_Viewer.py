@@ -4,7 +4,7 @@ import traceback
 from utilities.helper import LLMHelper
 
 try:
-    # Set page layout to wide screen and menu item
+    # Set page layout to wide screen and menu item!
     menu_items = {
 	'Get help': None,
 	'Report a bug': None,
