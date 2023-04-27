@@ -80,6 +80,7 @@
     },
     "OpenAIEndpoint": {
       "type": "string",
+	  "value": "az-openAI-35",
       "metadata": {
         "description": "Endpoint of OpenAI Resource"
       }
@@ -239,11 +240,11 @@
             },
             {
               "name": "OPENAI_API_BASE",
-              "value": "[parameters('OpenAIEndpoint')]"
+              "value": "az-openAI-35",
             },
             {
               "name": "OPENAI_API_KEY",
-              "value": "72b038b6976d4ccdb07d421bbb8ceae3"
+              "value": "[parameters('OpenAIKey')]"
             },
             {
               "name": "OPENAI_TEMPERATURE",
