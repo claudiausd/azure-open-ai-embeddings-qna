@@ -240,7 +240,7 @@
             {
               "name": "OPENAI_API_BASE",
               "value": "[parameters('OpenAIEndpoint')]",
-			  "key": "72b038b6976d4ccdb07d421bbb8ceae3",
+              "key": "72b038b6976d4ccdb07d421bbb8ceae3"
             },
             {
               "name": "OPENAI_API_KEY",
