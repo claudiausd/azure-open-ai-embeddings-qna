@@ -80,6 +80,7 @@
     },
     "OpenAIEndpoint": {
       "type": "string",
+      "value": "az-openAI-35",
       "metadata": {
         "description": "Endpoint of OpenAI Resource"
       }
@@ -205,145 +206,6 @@
       }
     },
     {
-            "type": "Microsoft.Cache/redisEnterprise",
-            "apiVersion": "2023-03-01-preview",
-            "name": "[parameters('RedisName')]",
-            "location": "[resourceGroup().location]",
-            "sku": {
-                "name": "Enterprise_E10",
-                "capacity": 2
-            },
-            "zones": [
-                "1",
-                "2",
-                "3"
-            ],
-            "identity": {
-                "type": "None"
-            },
-            "properties": {
-                "minimumTlsVersion": "1.2"
-            }
-    },
-    {
-            "type": "Microsoft.Cache/redisEnterprise/databases",
-            "apiVersion": "2023-03-01-preview",
-            "name": "[concat(parameters('RedisName'), '/default')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Cache/redisEnterprise', parameters('RedisName'))]"
-            ],
-            "properties": {
-                "clientProtocol": "Plaintext",
-                "port": 10000,
-                "clusteringPolicy": "EnterpriseCluster",
-                "evictionPolicy": "NoEviction",
-                "modules": [
-                    {
-                        "name": "RedisJSON"
-                    },
-                    {
-                        "name": "RediSearch"
-                    }
-                ],
-                "persistence": {
-                    "aofEnabled": false,
-                    "rdbEnabled": false
-                }
-            }
-    },
-    {
-      "name": "[parameters('StorageAccountName')]",
-      "type": "Microsoft.Storage/storageAccounts",
-      "apiVersion": "2021-08-01",
-      "location": "[resourceGroup().location]",
-      "kind": "StorageV2",
-      "sku": {
-        "name": "Standard_GRS"
-      }
-    },
-    {
-      "type": "Microsoft.Storage/storageAccounts/blobServices/containers",
-      "apiVersion": "2021-08-01",
-      "name": "[concat(parameters('StorageAccountName'), '/default/', variables('BlobContainerName'))]",
-      "dependsOn": [
-        "[resourceId('Microsoft.Storage/storageAccounts', parameters('StorageAccountName'))]"
-      ],
-      "properties": {
-        "publicAccess": "None"
-      }
-    },
-    {
-      "type": "Microsoft.Storage/storageAccounts/fileServices/shares",
-      "apiVersion": "2021-08-01",
-      "name": "[concat(parameters('StorageAccountName'), '/default/', variables('FileShareName'))]",
-      "dependsOn": [
-        "[resourceId('Microsoft.Storage/storageAccounts', parameters('StorageAccountName'))]"
-      ],
-      "properties": {
-
-        "protocolSettings": {
-          "smb": {}
-        },
-        "cors": {
-          "corsRules": []
-        },
-        "shareDeleteRetentionPolicy": {
-          "enabled": true,
-          "days": 7
-        }
-      }
-    },
-    {
-      "type": "Microsoft.Storage/storageAccounts/queueServices",
-      "apiVersion": "2022-09-01",
-      "name": "[concat(parameters('StorageAccountName'), '/default')]",
-      "dependsOn": [
-        "[resourceId('Microsoft.Storage/storageAccounts', parameters('StorageAccountName'))]"
-      ],
-      "properties": {
-        "cors": {
-          "corsRules": []
-        }
-      }
-    },
-    {
-      "type": "Microsoft.Storage/storageAccounts/queueServices/queues",
-      "apiVersion": "2022-09-01",
-      "name": "[concat(parameters('StorageAccountName'), '/default/doc-processing')]",
-      "dependsOn": [
-        "[resourceId('Microsoft.Storage/storageAccounts/queueServices', parameters('StorageAccountName'), 'default')]",
-        "[resourceId('Microsoft.Storage/storageAccounts', parameters('StorageAccountName'))]"
-      ],
-      "properties": {
-        "metadata": {}
-      }
-    },
-    {
-      "type": "Microsoft.Storage/storageAccounts/queueServices/queues",
-      "apiVersion": "2022-09-01",
-      "name": "[concat(parameters('StorageAccountName'), '/default/doc-processing-poison')]",
-      "dependsOn": [
-        "[resourceId('Microsoft.Storage/storageAccounts/queueServices', parameters('StorageAccountName'), 'default')]",
-        "[resourceId('Microsoft.Storage/storageAccounts', parameters('StorageAccountName'))]"
-      ],
-      "properties": {
-        "metadata": {}
-      }
-    },
-    {
-      "type": "Microsoft.Insights/components",
-      "apiVersion": "2020-02-02",
-      "name": "[parameters('ApplicationInsightsName')]",
-      "location": "[resourceGroup().location]",
-      "tags": {
-        "[concat('hidden-link:', resourceId('Microsoft.Web/sites', parameters('ApplicationInsightsName')))]": "Resource"
-      },
-      "properties": {
-        "Application_Type": "web"
-      },
-      "kind": "web"
-    },
-    {
       "apiVersion": "2018-11-01",
       "name": "[parameters('FunctionName')]",
       "type": "Microsoft.Web/sites",
@@ -378,7 +240,7 @@
             },
             {
               "name": "OPENAI_API_BASE",
-              "value": "[parameters('OpenAIEndpoint')]"
+              "value": "az-openAI-35",
             },
             {
               "name": "OPENAI_API_KEY",
