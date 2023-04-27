@@ -106,7 +106,7 @@ try:
 
     col1, col2, col3 = st.columns([2,2,2])
     with col1:
-        st.button("Check deployment", on_click=check_deployment)
+        st.button("Check deployment claudia", on_click=check_deployment)
     with col3:
         with st.expander("Settings"):
             # model = st.selectbox(
