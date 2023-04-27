@@ -80,7 +80,7 @@
     },
     "OpenAIEndpoint": {
       "type": "string",
-	  "value": "az-openAI-35",
+      "value": "az-openAI-35",
       "metadata": {
         "description": "Endpoint of OpenAI Resource"
       }
