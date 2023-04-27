@@ -239,12 +239,11 @@
             },
             {
               "name": "OPENAI_API_BASE",
-              "value": "[parameters('OpenAIEndpoint')]",
-              "key": "72b038b6976d4ccdb07d421bbb8ceae3"
+              "value": "[parameters('OpenAIEndpoint')]"
             },
             {
               "name": "OPENAI_API_KEY",
-              "value": "[parameters('OpenAIKey')]"
+              "value": "72b038b6976d4ccdb07d421bbb8ceae3"
             },
             {
               "name": "OPENAI_TEMPERATURE",
