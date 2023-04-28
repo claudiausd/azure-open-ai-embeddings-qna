@@ -4,6 +4,7 @@
   "parameters": {
     "ResourcePrefix": {
       "type": "string",
+      "defaultValue": "testopenai",
       "metadata": {
         "description": "provide a 2-13 character prefix for all resources."
       }
@@ -80,12 +81,14 @@
     },
     "OpenAIEndpoint": {
       "type": "string",
+      "defaultValue": "https://az-openai-35.openai.azure.com",
       "metadata": {
         "description": "Endpoint of OpenAI Resource"
       }
     },
     "OpenAIKey": {
       "type": "securestring",
+      "defaultValue": "",
       "metadata": {
         "description": "OpenAI API Key"
       }
@@ -134,30 +137,35 @@
     },
     "FormRecognizerEndpoint": {
       "type": "string",
+	  "defaultValue": "https://fr-document-manager.cognitiveservices.azure.com",
       "metadata": {
         "description": "Form Recognizer Endpoint"
       }
     },
     "FormRecognizerKey": {
       "type": "securestring",
+      "defaultValue": "",
       "metadata": {
         "description": "Form Recognizer Key"
       }
     },
     "TranslateEndpoint": {
       "type": "string",
+      "defaultValue": "https://api.cognitive.microsofttranslator.com/",
       "metadata": {
         "description": "Translator Endpoint"
       }
     },
     "TranslateKey": {
       "type": "securestring",
+      "defaultValue": "",
       "metadata": {
         "description": "Translator Key"
       }
     },
     "TranslateRegion": {
       "type": "string",
+      "defaultValue": "westus",
       "metadata": {
         "description": "Translator Region"
       }
