@@ -4,6 +4,19 @@ A simple web application for a OpenAI-enabled document search. This repo uses Az
 
 ![Architecture](docs/architecture.png)
 
+## Learning More about Enterprise QnA 
+
+Enterprise QnA is built on a pattern the AI community calls "Retrieval-Augmented Generation" (RAG). In addition to this repository having a reference architecture on how to implement this pattern on Azure, here are resources to familiarize yourself with the concepts in RAG, and samples to learn each underlying product's APIs:
+
+| Resource | Links	| Purpose| Highlights | 
+| ---- | ----	| ---- | ----------------- | 
+| Reference Architecture |	[GitHub](https://github.com/ruoccofabrizio/azure-open-ai-embeddings-qna) (This Repo) | 	Starter template for enterprise development.	- Easily deployable reference architecture following best practices. |  -  Frontend is Azure OpenAI chat orchestrated with Langchain. <br> - Composes Form Recognizer, Azure Search, Redis in an end-to-end design. <br>	- Supports working with Azure Search, Redis. |
+|  Educational Blog Post|	[Microsoft Blog](https://techcommunity.microsoft.com/t5/ai-applied-ai-blog/revolutionize-your-enterprise-data-with-chatgpt-next-gen-apps-w/ba-p/3762087), <br> [GitHub](https://github.com/Azure-Samples/azure-search-openai-demo/) |	Learn about the building blocks in a RAG solution.	| - Introduction to the key elements in a RAG architecture. <br> - Understand the role of vector search in RAG scenarios.<br> - See how Azure Search supports this pattern. <br> - Understand the role of prompts and orchestrator like Langchain. |
+| Azure OpenAI API Sample | [GitHub](https://github.com/microsoft/sample-app-aoai-chatGPT) |	Get started with Azure OpenAI features.	| - Sample code to make an interactive chat client as a web page.	- Helps you get started with latest Azure OpenAI APIs |
+| Business Process Automation Samples |	[GitHub](https://github.com/Azure/business-process-automation)| Showcase multiple BPA scenarios implemented with Form Recognizer and Azure services.	| - Consolidates in one repository multiple samples related to BPA and document understanding. <br> - Includes an end to end app, GUI to create and customize a pipeline to integrate multiple Azure Cognitive services. <br> -  Samples include document intelligence and search. | 
+
+
+
 # IMPORTANT NOTE (OpenAI generated)
 We have made some changes to the data format in the latest update of this repo. 
 <br>The new format is more efficient and compatible with the latest standards and libraries. However, we understand that some of you may have existing applications that rely on the previous format and may not be able to migrate to the new one immediately.
@@ -19,6 +32,7 @@ If you want to use a Chat based deployment (gpt-35-turbo or gpt-4-32k or gpt-4),
 
 # Running this repo
 You have multiple options to run the code:
+-   [Deploy on Azure (WebApp + Batch Processing) with Azure Cognitive Search](#deploy-on-azure-webapp--batch-processing-with-azure-cognitive-search)
 -   [Deploy on Azure (WebApp + Azure Cache for Redis + Batch Processing)](#deploy-on-azure-webapp--azure-cache-for-redis-enterprise--batch-processing)
 -   [Deploy on Azure (WebApp + Redis Stack + Batch Processing)](#deploy-on-azure-webapp--redis-stack--batch-processing)
 -   [Run everything locally in Docker (WebApp + Redis Stack + Batch Processing)](#run-everything-locally-in-docker-webapp--redis-stack--batch-processing)
@@ -26,10 +40,28 @@ You have multiple options to run the code:
 -   [Run everything locally in Python with venv](#run-everything-locally-in-python-with-venv)
 -   [Run WebApp locally in Docker against an existing Redis deployment](#run-webapp-locally-in-docker-against-an-existing-redis-deployment)
 
+## Deploy on Azure (WebApp + Batch Processing) with Azure Cognitive Search
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fruoccofabrizio%2Fazure-open-ai-embeddings-qna%2Fmain%2Finfrastructure%2Fdeployment_ACS.json)
+
+Click on the Deploy to Azure button and configure your settings in the Azure Portal as described in the [Environment variables](#environment-variables) section.
+
+![Architecture](docs/architecture_acs.png)
+
+Please be aware that you need:
+-   an existing Azure OpenAI resource with models deployments (instruction models e.g. text-davinci-003, and embeddings models e.g. text-embedding-ada-002)
+
+### Signing up for Vector Search Private Preview in Azure Cognitive Search
+Azure Cognitive Search supports searching using pure vectors, pure text, or in hybrid mode where both are combined. For the vector-based cases, you'll need to sign up for Vector Search Private Preview. To sign up, please fill in this form: [https://aka.ms/VectorSearchSignUp](https://aka.ms/VectorSearchSignUp).
+
+Preview functionality is provided under [Supplemental Terms of Use](https://azure.microsoft.com/en-us/support/legal/preview-supplemental-terms/), without a service level agreement, and isn't recommended for production workloads.
+
+
 ## Deploy on Azure (WebApp + Azure Cache for Redis Enterprise + Batch Processing)
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fruoccofabrizio%2Fazure-open-ai-embeddings-qna%2Fmain%2Finfrastructure%2FdeploymentACRE.json)
 
 Click on the Deploy to Azure button to automatically deploy a template on Azure by with the resources needed to run this example. This option will provision an instance of [Azure Cache for Redis](https://learn.microsoft.com/azure/azure-cache-for-redis/cache-overview) with [RediSearch](https://learn.microsoft.com/azure/azure-cache-for-redis/cache-redis-modules#redisearch) installed to store vectors and perform the similiarity search. 
+
+![Architecture](docs/architecture_acre.png)
 
 Please be aware that you still need:
 -   an existing Azure OpenAI resource with models deployments (instruction models e.g. `text-davinci-003`, and embeddings models e.g. `text-embedding-ada-002`) 
@@ -43,6 +75,8 @@ You will add the endpoint and access key information for these resources when de
 [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fruoccofabrizio%2Fazure-open-ai-embeddings-qna%2Fmain%2Finfrastructure%2Fdeployment.json)
 
 Click on the Deploy to Azure button and configure your settings in the Azure Portal as described in the [Environment variables](#environment-variables) section.
+
+![Architecture](docs/architecture_redis.png)
 
 Please be aware that you need:
 -   an existing Azure OpenAI resource with models deployments (instruction models e.g. `text-davinci-003`, and embeddings models e.g. `text-embedding-ada-002`) 
@@ -170,6 +204,58 @@ Note: You can use
 -   WebApp.Dockerfile to build the Web Application
 -   BatchProcess.Dockerfile to build the Azure Function for Batch Processing
 
+## Use the QnA API from the backend
+You can use a QnA API on your data exposed by the Azure Function for Batch Processing. 
+
+```python
+POST https://YOUR_BATCH_PROCESS_AZURE_FUNCTION_URL/api/apiQnA
+Body:
+    question: str
+    history: (str,str) -- OPTIONAL
+    custom_prompt: str -- OPTIONAL
+    custom_temperature: float --OPTIONAL
+
+Return:
+{'context': 'Introduction to Azure Cognitive Search - Azure Cognitive Search '
+            '(formerly known as "Azure Search") is a cloud search service that '
+            'gives developers infrastructure, APIs, and tools for building a '
+            'rich search experience over private, heterogeneous content in '
+            'web, mobile, and enterprise applications...'
+            '...'
+            '...',
+
+ 'question': 'What is ACS?',
+
+ 'response': 'ACS stands for Azure Cognitive Search, which is a cloud search service'
+             'that provides infrastructure, APIs, and tools for building a rich search experience'
+             'over private, heterogeneous content in web, mobile, and enterprise applications...'
+             '...'
+             '...',
+             
+ 'sources': '[https://learn.microsoft.com/en-us/azure/search/search-what-is-azure-search](https://learn.microsoft.com/en-us/azure/search/search-what-is-azure-search)'}
+```
+
+### Call the API with no history for QnA mode
+```python
+import requests
+
+r = requests.post('http://http://YOUR_BATCH_PROCESS_AZURE_FUNCTION_URL/api/apiQnA', json={
+    'question': 'What is the capital of Italy?'
+    })
+
+```
+### Call the API with history for Chat mode
+```python
+r = requests.post('http://YOUR_BATCH_PROCESS_AZURE_FUNCTION_URL/api/apiQnA', json={
+    'question': 'can I use python SDK?',
+    'history': [
+        ("what's ACS?", 
+        'ACS stands for Azure Cognitive Search, which is a cloud search service that provides infrastructure, APIs, and tools for building a rich search experience over private, heterogeneous content in web, mobile, and enterprise applications. It includes a search engine for full-text search, rich indexing with lexical analysis and AI enrichment for content extraction and transformation, rich query syntax for text search, fuzzy search, autocomplete, geo-search, and more. ACS can be created, loaded, and queried using the portal, REST API, .NET SDK, or another SDK. It also includes data integration at the indexing layer, AI and machine learning integration with Azure Cognitive Services, and security integration with Azure Active Directory and Azure Private Link integration.'
+        )
+        ]
+    })
+```
+
 ## Environment variables
 
 Here is the explanation of the parameters:
@@ -184,6 +270,9 @@ Here is the explanation of the parameters:
 |OPENAI_API_KEY| YOUR_AZURE_OPENAI_KEY | Your Azure OpenAI API Key. Get it in the [Azure Portal](https://portal.azure.com)|
 |OPENAI_TEMPERATURE|0.7| Azure OpenAI Temperature |
 |OPENAI_MAX_TOKENS|-1| Azure OpenAI Max Tokens |
+|VECTOR_STORE_TYPE| AzureSearch | Vector Store Type. Use AzureSearch for Azure Cognitive Search, leave it blank for Redis or Azure Cache for Redis Enterprise|
+|AZURE_SEARCH_SERVICE_NAME| YOUR_AZURE_SEARCH_SERVICE_URL | Your Azure Cognitive Search service name. Get it in the [Azure Portal](https://portal.azure.com)|
+|AZURE_SEARCH_ADMIN_KEY| AZURE_SEARCH_ADMIN_KEY | Your Azure Cognitive Search Admin key. Get it in the [Azure Portal](https://portal.azure.com)|
 |REDIS_ADDRESS| api | URL for Redis Stack: "api" for docker compose|
 |REDIS_PORT | 6379 | Port for Redis |
 |REDIS_PASSWORD| redis-stack-password | OPTIONAL - Password for your Redis Stack|
