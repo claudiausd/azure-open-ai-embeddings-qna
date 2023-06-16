@@ -1,8 +1,7 @@
 FROM python:3.9.10-slim-buster
 RUN apt-get update && apt-get install python-tk python3-tk tk-dev -y
-COPY ./code/requirements.txt /usr/local/src/myscripts/requirements.txt
-WORKDIR /usr/local/src/myscripts
-RUN pip install -r requirements.txt
+FROM fruocco/oai-embeddings
 COPY ./code/ /usr/local/src/myscripts
-EXPOSE 80
-CMD ["streamlit", "run", "OpenAI_Queries.py", "--server.port", "80", "--server.enableXsrfProtection", "false"]
+RUN pip install -r requirements.txt
+COPY ./code/bootstrap.min.css /usr/local/lib/python3.9/site-packages/streamlit_chat/frontend/build/bootstrap.min.css
+ENV STREAMLIT_SERVER_ENABLE_STATIC_SERVING=true
