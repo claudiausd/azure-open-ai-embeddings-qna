@@ -9,7 +9,8 @@ from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.llms import AzureOpenAI
 from langchain.vectorstores.base import VectorStore
 from langchain.chains import ChatVectorDBChain
-from langchain.chains import ConversationalRetrievalChain
+#from langchain.chains import ConversationalRetrievalChain
+from utilities.conversationalRetrieveChainExtended import conversationalCustomExtended
 from langchain.chains.qa_with_sources import load_qa_with_sources_chain
 from langchain.chains.llm import LLMChain
 from langchain.chains.chat_vector_db.prompts import CONDENSE_QUESTION_PROMPT
