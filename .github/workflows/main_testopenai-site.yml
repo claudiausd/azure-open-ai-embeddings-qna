@@ -23,8 +23,9 @@ jobs:
       uses: docker/login-action@v1
       with:
         registry: https://github.com/claudiausd/azure-open-ai-embeddings-qna/tree/fabrizio1/
-        username: ${{ secrets.AzureAppService_ContainerUsername_ed893f24d619423ba36dc3b34827b4b4 }}
-        password: ${{ secrets.AzureAppService_ContainerPassword_41db381805b1426092f9f0f61cb75dbb }}
+        username: ${{ secrets.AzureAppService_ContainerUsername_034a29750ec64822a99a66854b23ddb5 }}
+        password: ${{ secrets.AzureAppService_ContainerPassword_e4a7219b251449af8555be396fc3b8cb }}
+
 
     - name: Build and push container image to registry
       uses: docker/build-push-action@v2
