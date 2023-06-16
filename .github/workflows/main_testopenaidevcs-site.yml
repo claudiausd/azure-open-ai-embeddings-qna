@@ -23,14 +23,14 @@ jobs:
       uses: docker/login-action@v2
       with:
         registry: https://cipmpnoovle.azurecr.io/
-        username: ${{ secrets.AzureAppService_ContainerUsername_1cb9078aabc94c9585827f856440c745 }}
-        password: ${{ secrets.AzureAppService_ContainerPassword_b0007325f7fa491f81eb831ee9dc80a0 }}
+        username: ${{ secrets.AzureAppService_ContainerUsername_46167c994f6645338a1cd23af87f4b1b }}
+        password: ${{ secrets.AzureAppService_ContainerPassword_7e2c922a808f421e8d73a220ab11c347 }}
 
     - name: Build and push container image to registry
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: cipmpnoovle.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_1cb9078aabc94c9585827f856440c745 }}/cognitiveServices:${{ github.sha }}
+        tags: cipmpnoovle.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_46167c994f6645338a1cd23af87f4b1b }}/cipmpnoovle/cognitiveService:${{ github.sha }}
         file: ./Dockerfile
 
   deploy:
@@ -47,5 +47,5 @@ jobs:
       with:
         app-name: 'testopenaidevcs-site'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_8f5e3bd3d04a497e93bd8f9db0b5bbf0 }}
-        images: 'cipmpnoovle.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_1cb9078aabc94c9585827f856440c745 }}/cognitiveServices:${{ github.sha }}'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_f4cf4b65fa584be2a45b0c03aa5b11f0 }}
+        images: 'cipmpnoovle.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_46167c994f6645338a1cd23af87f4b1b }}/cipmpnoovle/cognitiveService:${{ github.sha }}'
