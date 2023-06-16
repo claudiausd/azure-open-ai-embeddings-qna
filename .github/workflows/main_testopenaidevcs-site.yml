@@ -30,7 +30,7 @@ jobs:
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: cipmpnoovle.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_46167c994f6645338a1cd23af87f4b1b }}/cipmpnoovle/cognitiveService:${{ github.sha }}
+        tags: cipmpnoovle.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_46167c994f6645338a1cd23af87f4b1b }}/cipmpnoovle/cognitiveservice:${{ github.sha }}
         file: ./WebApp.Dockerfile
 
   deploy:
